@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Agentic AI Smart Contract Auditing Research Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        slate: {
+                            850: '#1e293b',
+                            900: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-9 h-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
+                        🤖
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg text-slate-900 block leading-tight">Agentic AI Smart Contract
+                            Auditing</span>
+                        <span class="text-xs text-slate-500 block">Research Synthesis & Technical Literature
+                            Portal</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1 text-sm font-medium" id="nav-tabs">
+                    <button onclick="switchTab('thesis')" id="tab-btn-thesis"
+                        class="px-3 py-2 text-slate-600 hover:text-indigo-600 tab-active transition-colors">Thesis &
+                        Research Gap</button>
+                    <button onclick="switchTab('papers')" id="tab-btn-papers"
+                        class="px-3 py-2 text-slate-600 hover:text-indigo-600 transition-colors">Literature
+                        Corpus</button>
+                    <button onclick="switchTab('architecture')" id="tab-btn-architecture"
+                        class="px-3 py-2 text-slate-600 hover:text-indigo-600 transition-colors">Agentic
+                        Architecture</button>
+                    <button onclick="switchTab('datasets')" id="tab-btn-datasets"
+                        class="px-3 py-2 text-slate-600 hover:text-indigo-600 transition-colors">Vulnerability
+                        Datasets</button>
+                    <button onclick="switchTab('human-ai')" id="tab-btn-human-ai"
+                        class="px-3 py-2 text-slate-600 hover:text-indigo-600 transition-colors">Human-AI
+                        Coworking</button>
+                </nav>
+
+                <!-- Mobile Dropdown Navigation -->
+                <div class="md:hidden">
+                    <select onchange="switchTab(this.value)"
+                        class="bg-slate-100 border border-slate-300 rounded-md px-2 py-1 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="thesis">Thesis & Research Gap</option>
+                        <option value="papers">Literature Corpus</option>
+                        <option value="architecture">Agentic Architecture</option>
+                        <option value="datasets">Vulnerability Datasets</option>
+                        <option value="human-ai">Human-AI Coworking</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- SECTION 1: RESEARCH QUESTIONS & RESEARCH GAP -->
+        <section id="sec-thesis" class="space-y-6">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <div class="border-l-4 border-indigo-600 pl-4 py-1">
+                    <h1 class="text-2xl font-bold text-slate-900 mt-1">
+                        Real-Time Multi-Agent AI Framework for Smart Contract Auditing</h1>
+                    <p class="text-sm text-slate-600 mt-1">
+                        Candidate: <strong>Muhammad Ibraheem</strong>
+                        (Sapienza Università di Roma) | Focus: Smart Contract Vulnerabilities Audit, Agentic AI, AST
+                        Analysis, AI - Human (Co-Working ) </p>
+                </div>
+
+                <!-- Executive Summary -->
+                <div class="mt-4 text-slate-700 leading-relaxed text-sm space-y-2">
+                    <p>
+                        Smart contracts residing on immutable blockchains like Ethereum manage billions in digital
+                        assets, yet remain highly vulnerable to complex multi-step logical exploits. Conventional static
+                        application security testing (SAST) tools rely on rigid pattern matching, generating high
+                        false-positive rates while failing to catch context-dependent flaws.
+                    </p>
+                    <p>
+                        This research proposes a real-time, multi-agent AI framework focused exclusively on
+                        smart contract security & (AI & Human) co -working. By integrating dynamic threat feeds using
+                        fine tune local LLM and real-time vulnerabilities with full-stack
+                        Abstract Syntax Tree (AST) parsing and multi-agent dialogue, the proposed framework shifts smart
+                        contract auditing from reactive post-deployment analysis to continuous proactive defence.
+                    </p>
+                </div>
+
+                <!-- Research Questions Box -->
+                <div class="mt-6 bg-slate-50 border border-indigo-100 rounded-xl p-5">
+                    <h2 class="text-base font-bold text-indigo-950 flex items-center space-x-2">
+                        <span>🎯</span>
+                        <span>Research Questions</span>
+                    </h2>
+
+                    <div class="mt-3 space-y-3 text-sm">
+                        <div class="p-3 bg-white rounded-lg border border-indigo-100 shadow-2xs">
+                            <span class="font-bold text-indigo-700 block text-xs uppercase tracking-wider">Primary
+                                Research Question</span>
+                            <p class="text-slate-800 font-medium mt-1">
+                                How can a real-time, multi-agent AI framework leveraging Abstract Syntax Trees (AST) and
+                                dynamic threat intelligence improve the detection of logical vulnerabilities in smart
+                                contracts compared to traditional static analysis tools?
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="p-3 bg-white rounded-lg border border-slate-200">
+                                <span class="font-semibold text-xs text-indigo-600 block">Sub-Question 1</span>
+                                <p class="text-xs text-slate-700 mt-1">
+                                    What is the optimal multi-agent architecture (role specialization, CoT consensus)
+                                    for verifying complex vulnerabilities while
+                                    minimizing hallucination?</p>
+                            </div>
+
+                            <div class="p-3 bg-white rounded-lg border border-slate-200">
+                                <span class="font-semibold text-xs text-indigo-600 block">Sub-Question 2</span>
+                                <p class="text-xs text-slate-700 mt-1">How can dynamic threat ingestion from external
+                                    feeds (NVD, OSV, GHSA) be mapped to smart contract ASTs in real time to bridge the
+                                    TOC/TOU gap?</p>
+                            </div>
+
+                            <div class="p-3 bg-white rounded-lg border border-slate-200">
+                                <span class="font-semibold text-xs text-indigo-600 block">Sub-Question 3</span>
+                                <p class="text-xs text-slate-700 mt-1">How does the framework's detection accuracy,
+                                    execution speed, and exploit validation perform against industry benchmarks like
+                                    EVMBench and SmartBugs?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explicit Research Gap Box -->
+                <div class="mt-6 bg-amber-50/80 border border-amber-200 rounded-xl p-5">
+                    <h2 class="text-base font-bold text-amber-900 flex items-center space-x-2">
+                        <span>⚡</span>
+                        <span>The Identified Research Gap</span>
+                    </h2>
+                    <p class="mt-2 text-sm text-amber-950 leading-relaxed">
+                        While existing literature acknowledges the potential of Agentic AI and the severe nature of
+                        smart contract vulnerabilities,
+                        <strong>there is currently no unified framework that actively
+                            combines real-time vulnerability checking with structural code analysis using a multi-agent
+                            architecture
+                        </strong>.
+                    </p>
+                    <p class="mt-2 text-xs text-amber-900 leading-relaxed">
+                        Specifically, existing tools do not continuously ingest live threat intelligence from sources
+                        like the National Vulnerability Database (NVD), GitHub Security Advisories (GHSA), and Open
+                        Source Vulnerabilities (OSV) to immediately apply it to a target smart contract codebase. Most
+                        current automated auditing approaches still rely on static, fixed rules or historic datasets,
+                        creating a critical vulnerability window (Time-of-Check to Time-of-Use) against rapidly emerging
+                        zero-day logical exploits.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Literature vs Thesis Novelty Matrix -->
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 class="text-lg font-bold text-slate-900 mb-1">
+                    Evaluation of Novelty: Is There an Exact Pre-existing Framework?</h2>
+                <p class="text-sm text-slate-600 mb-4">
+                    An exhaustive literature review confirms that
+                    <strong>
+                        no single pre-existing research paper matches this exact architectural synthesis
+                    </strong>.
+                    Below is a comparative evaluation of state-of-the-art literature pillars against the thesis.
+                </p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-semibold">
+                                <th class="p-3">Architectural Component</th>
+                                <th class="p-3">Current Literature State</th>
+                                <th class="p-3">Key Representative Frameworks</th>
+                                <th class="p-3">Identified Gap / Novelty Element</th>
+                            </tr>
+                        </thead>
+                     <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">Multi-Agent AI Auditing</td>
+                                <td class="p-3 text-slate-600">Established for static smart contract analysis. Uses role
+                                    specialization and CoT dialogue.</td>
+                                <td class="p-3 text-indigo-600 font-medium">LLM-SmartAudit, SPEAR, LISA</td>
+                                <td class="p-3">
+                                    <span class="px-2 py-1 bg-amber-100 text-amber-800 rounded text-[11px] font-medium">
+                                        Relies on static knowledge bases</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">AST & Knowledge Graphs</td>
+                                <td class="p-3 text-slate-600">Used for structure-aware RAG chunking, AST differencing,
+                                    and contract graph queries.</td>
+                                <td class="p-3 text-indigo-600 font-medium">cAST, SoliDiffy, CKG-LLM</td>
+                                <td class="p-3"><span
+                                        class="px-2 py-1 bg-amber-100 text-amber-800 rounded text-[11px] font-medium">Applied
+                                        statically to offline code</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">Real-Time Threat Ingestion</td>
+                                <td class="p-3 text-slate-600">Relies on pre-trained historical datasets or static
+                                    historical report knowledge graphs.</td>
+                                <td class="p-3 text-indigo-600 font-medium">Knowdit, FORGE-Curated</td>
+                                <td class="p-3"><span
+                                        class="px-2 py-1 bg-emerald-100 text-emerald-800 rounded text-[11px] font-medium">Novel:
+                                        Live CVE feed cross-referencing</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">Active Exploit Validation</td>
+                                <td class="p-3 text-slate-600">Generates cross-contract call graphs and attack plans to
+                                    prove exploitability.</td>
+                                <td class="p-3 text-indigo-600 font-medium">CHAINTRIX, KASS, SmartFuzz</td>
+                                <td class="p-3"><span
+                                        class="px-2 py-1 bg-emerald-100 text-emerald-800 rounded text-[11px] font-medium">Novel:
+                                        Direct feedback to dynamic AST agents</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: RESEARCH PAPERS MATRIX & EXPLORER -->
+        <section id="sec-papers" class="space-y-6 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <div
+                    class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Comprehensive Literature Corpus</h2>
+                        <p class="text-sm text-slate-600">Interactive repository of key research papers published over
+                            the last decade across multi-agent AI, AST parsing, and security operations.</p>
+                    </div>
+                    <!-- Controls: Search & Category Filter -->
+                    <div class="flex flex-wrap gap-2">
+                        <input type="text" id="paper-search" oninput="filterPapers()"
+                            placeholder="Search papers, authors, tags..."
+                            class="px-3 py-1.5 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64">
+                        <select id="paper-category" onchange="filterPapers()"
+                            class="px-3 py-1.5 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                            <option value="all">All Categories</option>
+                            <option value="multi-agent">Multi-Agent Smart Contract Auditing</option>
+                            <option value="ast">AST, Differencing & Knowledge Graphs</option>
+                            <option value="human-ai">Human-AI Coworking & Governance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Papers Grid Display -->
+                <div id="papers-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <!-- Dynamic rendering via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: AGENTIC FRAMEWORKS & AUDITING MECHANICS -->
+        <section id="sec-architecture" class="space-y-6 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-1">Smart Contract Multi-Agent Auditing Mechanics</h2>
+                <p class="text-sm text-slate-600 mb-6">Interactive simulation and empirical evaluation of multi-agent
+                    dialogue, structural AST parsing, and false-positive reduction funnels.</p>
+
+                <!-- Interactive Workflow Diagram (HTML/CSS Nodes - NO SVG/Mermaid) -->
+                <div class="bg-slate-900 text-white rounded-xl p-6 shadow-inner">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-semibold uppercase tracking-wider text-indigo-400">Proposed Smart
+                            Contract Agentic Pipeline Simulation</h3>
+                        <span class="text-xs text-slate-400">Click a stage to inspect operational mechanics</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center text-xs">
+                        <!-- Step 1 -->
+                        <div onclick="selectPipelineStep(1)" id="pipe-step-1"
+                            class="cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-indigo-500 p-4 rounded-lg transition-all shadow-md">
+                            <div
+                                class="w-8 h-8 mx-auto rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm mb-2">
+                                1</div>
+                            <span class="font-bold text-slate-200 block text-sm">Dynamic Ingestion</span>
+                            <span class="text-slate-400 mt-1 block">Live scrapers for NVD, GHSA, OSV & VulnCheck
+                                feeds.</span>
+                        </div>
+                        <!-- Step 2 -->
+                        <div onclick="selectPipelineStep(2)" id="pipe-step-2"
+                            class="cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-slate-700 p-4 rounded-lg transition-all">
+                            <div
+                                class="w-8 h-8 mx-auto rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-sm mb-2">
+                                2</div>
+                            <span class="font-bold text-slate-200 block text-sm">Smart Contract AST</span>
+                            <span class="text-slate-400 mt-1 block">Tree-Sitter Solidity parsing & CCIM interaction
+                                graphs.</span>
+                        </div>
+                        <!-- Step 3 -->
+                        <div onclick="selectPipelineStep(3)" id="pipe-step-3"
+                            class="cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-slate-700 p-4 rounded-lg transition-all">
+                            <div
+                                class="w-8 h-8 mx-auto rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-sm mb-2">
+                                3</div>
+                            <span class="font-bold text-slate-200 block text-sm">Multi-Agent Dialogue</span>
+                            <span class="text-slate-400 mt-1 block">Broad vs Targeted CoT reasoning & consensus
+                                filtering.</span>
+                        </div>
+                        <!-- Step 4 -->
+                        <div onclick="selectPipelineStep(4)" id="pipe-step-4"
+                            class="cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-slate-700 p-4 rounded-lg transition-all">
+                            <div
+                                class="w-8 h-8 mx-auto rounded-full bg-slate-600 text-white flex items-center justify-center font-bold text-sm mb-2">
+                                4</div>
+                            <span class="font-bold text-slate-200 block text-sm">PoC Exploit & Patch</span>
+                            <span class="text-slate-400 mt-1 block">Executable Foundry/Anvil PoC exploit & code
+                                remediation.</span>
+                        </div>
+                    </div>
+
+                    <!-- Step Detailed Explanation Pane -->
+                    <div id="pipeline-detail-pane"
+                        class="mt-6 bg-slate-800/90 rounded-lg p-4 border border-slate-700 text-sm">
+                        <h4 class="font-bold text-indigo-400 text-base mb-1" id="pipe-detail-title">Step 1: Dynamic
+                            Threat Intelligence Ingestion</h4>
+                        <p class="text-slate-300 leading-relaxed" id="pipe-detail-desc">
+                            A cluster of dedicated Intelligence Agents continuously scrapes, parses, and normalizes
+                            vulnerability reports from high-fidelity feeds including the National Vulnerability Database
+                            (NVD), GitHub Security Advisories (GHSA), Open Source Vulnerabilities (OSV), and VulnCheck.
+                            Normalized data is continuously injected into a dynamic Knowledge Base to eliminate the
+                            TOC/TOU vulnerability window.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Empirical Detection Chart & Methodology Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <!-- Chart Column -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base mb-1">Multi-Agent Dialogue Detection Accuracy
+                                Boost</h3>
+                            <p class="text-xs text-slate-600 mb-4">Empirical data benchmarking logical vulnerability
+                                detection accuracy across zero-shot vs multi-agent Chain-of-Thought (CoT) dialogue
+                                paradigms.</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-audit-performance"></canvas>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2 text-center">Source: Empirical findings from
+                            LLM-SmartAudit (2025) & SmartFuzz (2024)</p>
+                    </div>
+
+                    <!-- Key Framework Summaries Column -->
+                    <div class="space-y-3">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-slate-900 text-sm">CHAINTRIX Framework</h4>
+                                <span class="text-xs px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded font-medium">CCIM
+                                    Model</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">Anchors LLM reasoning in a deterministic
+                                Cross-Contract Interaction Model (CCIM). Validates AI assertions against caller/callee
+                                directed graphs to eliminate hallucinated access control bugs.</p>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-slate-900 text-sm">cAST & SoliDiffy</h4>
+                                <span
+                                    class="text-xs px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-medium">AST
+                                    Differencing</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">Replaces naive chunking with syntax-aware
+                                split-then-merge algorithms. SoliDiffy captures structural modifications across Solidity
+                                contract iterations to isolate changes.</p>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-slate-900 text-sm">KASS (Knowledge-Augmented Attack)</h4>
+                                <span
+                                    class="text-xs px-2 py-0.5 bg-purple-100 text-purple-800 rounded font-medium">Exploit
+                                    Validation</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-1">Decomposes exploit generation into planning,
+                                generation, and simulated execution. Achieves >94% executable PoC generation rate to
+                                prove exploitability on-chain.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PUBLIC VULNERABILITY DATASETS & BENCHMARKS -->
+        <section id="sec-datasets" class="space-y-6 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-1">Public Smart Contract Vulnerability Datasets</h2>
+                <p class="text-sm text-slate-600 mb-6">Comprehensive review of major public repositories used to
+                    benchmark, fine-tune, and evaluate AI auditing models.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Dataset Scale Chart -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">Dataset Composition & Scale Comparison</h3>
+                        <p class="text-xs text-slate-600 mb-3">Comparing annotated sample sizes across major public
+                            smart contract datasets.</p>
+                        <div class="chart-container">
+                            <canvas id="chart-dataset-scale"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Dataset Evaluation Modes Chart -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">EVMBench Evaluation Paradigm Breakdown</h3>
+                        <p class="text-xs text-slate-600 mb-3">Distribution of evaluation tasks in EVMBench's
+                            programmatic Anvil testing harness.</p>
+                        <div class="chart-container">
+                            <canvas id="chart-evmbench-modes"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datasets Table -->
+                <div class="mt-6 overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-semibold">
+                                <th class="p-3">Dataset Name</th>
+                                <th class="p-3">Scope & Scale</th>
+                                <th class="p-3">Primary Evaluation Feature</th>
+                                <th class="p-3">Key Limitations / Bottlenecks</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">EVMBench</td>
+                                <td class="p-3 text-slate-600">120 high-severity bugs across 40 Code4rena audits</td>
+                                <td class="p-3 font-medium text-indigo-600">On-chain programmatic grading via Anvil
+                                    local chain</td>
+                                <td class="p-3 text-slate-500">Unstable agent discovery rates; ignores network timing
+                                    mechanics</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">SmartBugs Curated</td>
+                                <td class="p-3 text-slate-600">143 contracts annotated line-by-line</td>
+                                <td class="p-3 font-medium text-indigo-600">DASP taxonomy mapping for static analyzer
+                                    evaluation</td>
+                                <td class="p-3 text-slate-500">Focused on older Solidity versions; simple isolated
+                                    contracts</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">sb-heists</td>
+                                <td class="p-3 text-slate-600">Subset of SmartBugs paired with exploits</td>
+                                <td class="p-3 font-medium text-indigo-600">Executable exploit verification framework
+                                </td>
+                                <td class="p-3 text-slate-500">Limited contract diversity; focused primarily on legacy
+                                    bugs</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">FORGE-Curated</td>
+                                <td class="p-3 text-slate-600">Extracted from real-world audit reports using LLMs</td>
+                                <td class="p-3 font-medium text-indigo-600">High-quality contextual descriptions for LLM
+                                    RAG</td>
+                                <td class="p-3 text-slate-500">Moderate scale; requires manual verification to prevent
+                                    noise</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">Kaggle SC Dataset</td>
+                                <td class="p-3 text-slate-600">35,228 labeled contracts + 10,448 mitigation pairs</td>
+                                <td class="p-3 font-medium text-indigo-600">Large-scale supervised training for deep
+                                    models</td>
+                                <td class="p-3 text-slate-500">High synthetic component; lower logical vulnerability
+                                    coverage</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-bold text-slate-900">DeFiHackLabs</td>
+                                <td class="p-3 text-slate-600">Extensive collection of historical DeFi hack PoCs</td>
+                                <td class="p-3 font-medium text-indigo-600">Runnable Foundry/Hardhat environments for
+                                    exact reproduction</td>
+                                <td class="p-3 text-slate-500">Unstructured natural language text requiring custom
+                                    parsers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: HUMAN-AI COWORKING & COGNITIVE GOVERNANCE -->
+        <section id="sec-human-ai" class="space-y-6 hidden">
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-1">Human-AI Coworking & Socio-Cognitive Governance</h2>
+                <p class="text-sm text-slate-600 mb-6">Transitioning from Human-in-the-Loop (HITL) dependency to
+                    Human-on-the-Loop (HOTL) strategic oversight.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- SOC Usage Chart -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 md:col-span-1">
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">LLM Task Utilization in Security Operations
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-3">Empirical study analyzing 3,090 queries submitted by 45
+                            security analysts.</p>
+                        <div class="chart-container">
+                            <canvas id="chart-soc-usage"></canvas>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2 text-center">Source: Empirical SOC Study (2024)</p>
+                    </div>
+
+                    <!-- 4C Framework Grid -->
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="bg-slate-900 text-white p-4 rounded-xl">
+                            <h3 class="font-bold text-indigo-400 text-base">The 4C Governance Framework for Agentic AI
+                            </h3>
+                            <p class="text-xs text-slate-300 mt-1">Human society-inspired governance model regulating
+                                agentic autonomy and human oversight.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div
+                                class="p-3 bg-slate-50 rounded-lg border-l-4 border-indigo-500 border-t border-r border-b border-slate-200">
+                                <h4 class="font-bold text-slate-900 text-sm">1. Core Layer</h4>
+                                <p class="text-xs text-slate-600 mt-1">Execution environment, memory stores, and API
+                                    keys establishing hard execution boundaries.</p>
+                            </div>
+
+                            <div
+                                class="p-3 bg-slate-50 rounded-lg border-l-4 border-emerald-500 border-t border-r border-b border-slate-200">
+                                <h4 class="font-bold text-slate-900 text-sm">2. Cognition Layer</h4>
+                                <p class="text-xs text-slate-600 mt-1">Internal reasoning beliefs, chain-of-thought
+                                    prompts, and alignment safeguards mitigating hallucinations.</p>
+                            </div>
+
+                            <div
+                                class="p-3 bg-slate-50 rounded-lg border-l-4 border-purple-500 border-t border-r border-b border-slate-200">
+                                <h4 class="font-bold text-slate-900 text-sm">3. Connection Layer</h4>
+                                <p class="text-xs text-slate-600 mt-1">Inter-agent communication protocols and
+                                    human-on-the-loop oversight channels.</p>
+                            </div>
+
+                            <div
+                                class="p-3 bg-slate-50 rounded-lg border-l-4 border-amber-500 border-t border-r border-b border-slate-200">
+                                <h4 class="font-bold text-slate-900 text-sm">4. Compliance Layer</h4>
+                                <p class="text-xs text-slate-600 mt-1">Deontic Knowledge Graphs, immutable audit trails,
+                                    and legal/ethical compliance standards.</p>
+                            </div>
+                        </div>
+
+                        <!-- Automation Bias Warning Box -->
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                            <div class="flex items-start space-x-3">
+                                <div class="text-amber-800 font-bold text-lg">⚠️</div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900 text-sm">Empirical Finding: Automation Bias in
+                                        CTF Security Events</h4>
+                                    <p class="text-xs text-amber-800 mt-1 leading-relaxed">
+                                        Observational studies during Capture-The-Flag (CTF) events revealed that
+                                        participant trust in AI decreased after hands-on usage due to hallucinated
+                                        conclusions and tool misuse. Verifying complex AI reasoning frequently imposed
+                                        higher cognitive load than manual investigation, reinforcing the necessity for
+                                        visual support tools and deterministic AST grounding.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            Smart Contract Security & Agentic AI Research Synthesis | Based on Literature Corpus (2015–2026) | Sapienza
+            Università di Roma
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Literature Corpus Data
+        const researchPapers = [
+            {
+                title: "LLM-SmartAudit: Advanced Smart Contract Vulnerability Detection",
+                category: "multi-agent",
+                authors: "Zhang et al. (2025)",
+                keyFinding: "Improves logical vulnerability detection accuracy from 9.96% to 47.55% using role-specialized agents (Broad vs Targeted) in multi-agent dialogue.",
+                tags: ["Multi-Agent", "CoT Prompts", "Solidity Auditing"]
+            },
+            {
+                title: "SPEAR: An Engineering Case Study of Multi-Agent Coordination",
+                category: "multi-agent",
+                authors: "Liu et al. (2024)",
+                keyFinding: "Introduces a risk-aware Planning Agent that prioritizes audit tasks, demonstrating lower variance and stable progress under tool failure conditions.",
+                tags: ["Planning Agent", "Multi-Agent Systems", "Fault Tolerance"]
+            },
+            {
+                title: "LISA Technical Report: An Agentic Framework for Smart Contract Auditing",
+                category: "multi-agent",
+                authors: "Wang et al. (2024)",
+                keyFinding: "Utilizes a multi-stage merging procedure to reduce false positives by cross-validating findings against a structured audit knowledge base.",
+                tags: ["Agentic Framework", "False Positive Reduction"]
+            },
+            {
+                title: "CHAINTRIX: A multi-pipeline LLM-augmented framework",
+                category: "ast",
+                authors: "Chen et al. (2024)",
+                keyFinding: "Parses Solidity contracts into a Cross-Contract Interaction Model (CCIM) directed graph to filter out hallucinated findings.",
+                tags: ["CCIM Model", "AST Graph", "Cross-Contract"]
+            },
+            {
+                title: "Knowdit: Agentic Smart Contract Vulnerability Detection",
+                category: "ast",
+                authors: "Zhao et al. (2024)",
+                keyFinding: "Constructs a bipartite auditing knowledge graph from historical audit reports, discovering 9 high and 36 medium previously unknown vulnerabilities.",
+                tags: ["Knowledge Graph", "DeFi Semantics", "Audit Extraction"]
+            },
+            {
+                title: "cAST: Structure-Aware Code Chunking for RAG",
+                category: "ast",
+                authors: "Devlin et al. (2024)",
+                keyFinding: "Applies recursive split-then-merge algorithm over ASTs, ensuring retrieved code chunks remain syntactically self-contained for LLM RAG.",
+                tags: ["AST Parsing", "RAG Optimization", "Tree-Sitter"]
+            },
+            {
+                title: "EVMBench: Programmatic Benchmarking for Agentic AI",
+                category: "multi-agent",
+                authors: "Code4rena / Security Research (2024)",
+                keyFinding: "Provides 120 high-severity bugs across Detect, Patch, and Exploit modes graded on local Anvil fork state changes.",
+                tags: ["Benchmark", "Anvil Execution", "Exploit Mode"]
+            },
+            {
+                title: "From Passive Tool to Socio-cognitive Teammate",
+                category: "human-ai",
+                authors: "Johnson & Norman (2024)",
+                keyFinding: "Defines the theoretical transition of AI from execution utilities to socio-cognitive teammates capable of shared context and intent alignment.",
+                tags: ["Socio-Cognitive", "HOTL Oversight", "Intent Alignment"]
+            },
+            {
+                title: "LLMs in the SOC: An Empirical Study of Human-AI Collaboration",
+                category: "human-ai",
+                authors: "Al-Hassan et al. (2024)",
+                keyFinding: "Analyzed 3,090 analyst queries showing heavy reliance on LLMs for threat summarization, log analysis, and script generation.",
+                tags: ["SOC Operations", "Empirical Study", "Threat Summarization"]
+            },
+            {
+                title: "Human Society-Inspired Approaches to Agentic AI Security: The 4C Framework",
+                category: "human-ai",
+                authors: "Gupta et al. (2025)",
+                keyFinding: "Categorizes multi-agent AI security into Core, Cognition, Connection, and Compliance layers to govern autonomous agent behavior.",
+                tags: ["4C Framework", "Governance", "Trusted Autonomy"]
+            }
+        ];
+
+        // Pipeline Step Details
+        const pipelineSteps = {
+            1: {
+                title: "Step 1: Dynamic Threat Intelligence Ingestion",
+                desc: "Intelligence Agents continuously monitor and scrape vulnerability reports from NVD, GHSA, OSV, and VulnCheck in real time. Incoming reports are normalized, deduplicated, and streamed directly into the auditor knowledge base, closing the Time-of-Check vs Time-of-Use window."
+            },
+            2: {
+                title: "Step 2: Smart Contract Structural AST Parsing",
+                desc: "Structural Analysis Agents utilize Tree-Sitter to generate Abstract Syntax Trees (AST) for target Solidity/Rust smart contracts. A Cross-Contract Interaction Model (CCIM) directed graph is built to map state modifications, call graphs, and modifier dependencies."
+            },
+            3: {
+                title: "Step 3: Multi-Agent Dialogue & CCIM Filtering",
+                desc: "Auditor Agents engage in multi-turn Chain-of-Thought (CoT) dialogue, alternating between Broad Scanning and Targeted Analysis. Findings are passed through a deterministic CCIM graph filter to automatically invalidate false-positive assertions."
+            },
+            4: {
+                title: "Step 4: PoC Exploit Synthesis & Verified Remediation",
+                desc: "Exploit Agents synthesize executable Proof-of-Concept (PoC) scripts in Foundry/Hardhat and test them against a local Anvil fork. Upon confirming exploitability, Remediation Agents propose verified, minimal-diff code patches."
+            }
+        };
+
+        // Tab Switcher
+        function switchTab(tabKey) {
+            const sections = ['thesis', 'papers', 'architecture', 'datasets', 'human-ai'];
+            sections.forEach(s => {
+                const secElem = document.getElementById(`sec-${s}`);
+                const btnElem = document.getElementById(`tab-btn-${s}`);
+                if (s === tabKey) {
+                    secElem.classList.remove('hidden');
+                    if (btnElem) btnElem.classList.add('tab-active');
+                } else {
+                    secElem.classList.add('hidden');
+                    if (btnElem) btnElem.classList.remove('tab-active');
+                }
+            });
+        }
+
+        // Render Literature Papers Grid
+        function renderPapers(papers) {
+            const grid = document.getElementById('papers-grid');
+            grid.innerHTML = '';
+            papers.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'p-4 bg-slate-50 border border-slate-200 rounded-lg hover:shadow-md transition-shadow flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-slate-900 text-sm leading-snug">${p.title}</h3>
+                        </div>
+                        <p class="text-xs font-semibold text-indigo-600 mb-2">${p.authors}</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">${p.keyFinding}</p>
+                    </div>
+                    <div class="mt-3 flex flex-wrap gap-1">
+                        ${p.tags.map(t => `<span class="px-2 py-0.5 bg-slate-200 text-slate-700 text-[10px] rounded">${t}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Papers
+        function filterPapers() {
+            const query = document.getElementById('paper-search').value.toLowerCase();
+            const category = document.getElementById('paper-category').value;
+
+            const filtered = researchPapers.filter(p => {
+                const matchesSearch = p.title.toLowerCase().includes(query) ||
+                    p.authors.toLowerCase().includes(query) ||
+                    p.keyFinding.toLowerCase().includes(query) ||
+                    p.tags.some(t => t.toLowerCase().includes(query));
+                const matchesCat = (category === 'all') || (p.category === category);
+                return matchesSearch && matchesCat;
+            });
+            renderPapers(filtered);
+        }
+
+        // Pipeline Step Selection Handler
+        function selectPipelineStep(stepNum) {
+            for (let i = 1; i <= 4; i++) {
+                const stepElem = document.getElementById(`pipe-step-${i}`);
+                if (i === stepNum) {
+                    stepElem.className = "cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-indigo-500 p-4 rounded-lg transition-all shadow-md";
+                } else {
+                    stepElem.className = "cursor-pointer bg-slate-800 hover:bg-slate-700 border-2 border-slate-700 p-4 rounded-lg transition-all";
+                }
+            }
+            const data = pipelineSteps[stepNum];
+            document.getElementById('pipe-detail-title').innerText = data.title;
+            document.getElementById('pipe-detail-desc').innerText = data.desc;
+        }
+
+        // Initialize Chart.js Charts
+        function initCharts() {
+            // Chart 1: Audit Accuracy Performance
+            const ctxAudit = document.getElementById('chart-audit-performance').getContext('2d');
+            new Chart(ctxAudit, {
+                type: 'bar',
+                data: {
+                    labels: ['Single Prompt (Zero-Shot)', 'Broad Analysis', 'Targeted Analysis', 'Multi-Agent CoT Dialogue'],
+                    datasets: [{
+                        label: 'Logical Vulnerability Accuracy (%)',
+                        data: [9.96, 22.4, 34.1, 47.55],
+                        backgroundColor: ['#cbd5e1', '#a5b4fc', '#818cf8', '#4f46e5'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => ` Detection Accuracy: ${ctx.raw}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 60, title: { display: true, text: 'Accuracy Rate (%)' } },
+                        x: { ticks: { callback: function (val, index) { return this.getLabelForValue(index).substring(0, 16); } } }
+                    }
+                }
+            });
+
+            // Chart 2: Dataset Scale
+            const ctxScale = document.getElementById('chart-dataset-scale').getContext('2d');
+            new Chart(ctxScale, {
+                type: 'bar',
+                data: {
+                    labels: ['EVMBench', 'SmartBugs', 'FORGE', 'Kaggle SC'],
+                    datasets: [{
+                        label: 'Annotated Contracts',
+                        data: [120, 143, 850, 35228],
+                        backgroundColor: '#6366f1',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { type: 'logarithmic', title: { display: true, text: 'Contract Count (Log Scale)' } }
+                    }
+                }
+            });
+
+            // Chart 3: EVMBench Modes
+            const ctxEvm = document.getElementById('chart-evmbench-modes').getContext('2d');
+            new Chart(ctxEvm, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Detect Mode', 'Patch Mode', 'Exploit Mode'],
+                    datasets: [{
+                        data: [40, 40, 40],
+                        backgroundColor: ['#6366f1', '#10b981', '#f59e0b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 4: SOC Query Utilization
+            const ctxSoc = document.getElementById('chart-soc-usage').getContext('2d');
+            new Chart(ctxSoc, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Threat Summarization', 'Script Generation', 'Log Parsing', 'Other Tasks'],
+                    datasets: [{
+                        data: [42, 28, 18, 12],
+                        backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#94a3b8']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        // On Load Initializer
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPapers(researchPapers);
+            initCharts();
+        });
+    </script>
+</body>
+
+</html>
