@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Vulnerability Scanner Architecture</title>
+
+<script id="lumi-os-theme-init">
+(function() {
+  var savedTheme = null;
+  try {
+    savedTheme = localStorage.getItem('architecture-theme');
+  } catch (e) {}
+
+  function syncThemeControl() {
+    var button = document.getElementById('theme-toggle');
+    if (!button) return;
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var label = isDark ? 'Light mode' : 'Dark mode';
+    button.setAttribute('aria-label', 'Switch to ' + label.toLowerCase());
+    button.setAttribute('aria-pressed', String(isDark));
+    var text = button.querySelector('.theme-toggle-label');
+    if (text) text.textContent = label;
+  }
+
+  function syncBody() {
+    var dt = document.documentElement.getAttribute('data-theme');
+    if (document.body && (dt === 'dark' || dt === 'light')) {
+      document.body.classList.toggle('dark-mode', dt === 'dark');
+    }
+    syncThemeControl();
+  }
+  function syncTheme(theme) {
+    if (theme !== 'dark' && theme !== 'light') return;
+    document.documentElement.setAttribute('data-theme', theme);
+    syncBody();
+  }
+  if (typeof MutationObserver === 'function') {
+    new MutationObserver(syncBody).observe(document.documentElement, {
+      attributes: true, attributeFilter: ['data-theme']
+    });
+  }
+  if (typeof document.addEventListener === 'function') {
+    document.addEventListener('DOMContentLoaded', syncBody);
+  }
+  try {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    var initialTheme = savedTheme === 'dark' || savedTheme === 'light'
+      ? savedTheme
+      : (mq && mq.matches ? 'dark' : 'light');
+    syncTheme(initialTheme);
+    if (mq && !savedTheme && mq.addEventListener) {
+        mq.addEventListener('change', function(e) {
+          syncTheme(e.matches ? 'dark' : 'light');
+        });
+    }
+  } catch (e) {}
+  window.addEventListener('message', function(e) {
+    if (e.data && (e.data.type === 'set-theme' || e.data.type === 'APPLY_THEME') && e.data.theme) {
+      syncTheme(e.data.theme);
+    }
+  });
+})();
+</script>
+  <link rel="stylesheet" href="architecture.css">
+</head>
+<body>
+  <div class="widget-container">
+    <a href="index.html" class="lumi-chip architecture-back-link">Back to main page</a>
+    <!-- Header Zone -->
+    <div class="widget-header">
+      <div class="widget-heading-row">
+        <h2 class="lumi-headline-m widget-title">RAG Vulnerability Scanner</h2>
+        <button id="theme-toggle" class="lumi-chip theme-toggle" type="button" onclick="toggleTheme()" aria-label="Switch to dark mode" aria-pressed="false">
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.2 15.6A8.5 8.5 0 0 1 8.4 3.8 8.5 8.5 0 1 0 20.2 15.6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="theme-toggle-label">Dark mode</span>
+        </button>
+      </div>
+      <p class="lumi-body-s widget-description">
+        Interactive tech stack choices separating daily ingestion & real-time inference loops.
+      </p>
+    </div>
+
+    <!-- Flow Selection Controls -->
+    <div class="flow-controls">
+      <span class="lumi-body-m-emphasized flow-label">Flow Highlight:</span>
+      <button class="lumi-chip is-active" data-flow="all" onclick="selectFlow('all')">All Components</button>
+      <button class="lumi-chip" data-flow="daily" onclick="selectFlow('daily')">Daily Ingestion Flow</button>
+      <button class="lumi-chip" data-flow="sync" onclick="selectFlow('sync')">Real-Time Scan Flow</button>
+      <button class="lumi-chip" data-flow="rag" onclick="selectFlow('rag')">RAG Vector Loop</button>
+    </div>
+
+    <!-- SVG Architecture Viewport -->
+    <div class="diagram-card">
+      <svg class="svg-viewport" viewBox="0 0 680 440">
+        <defs>
+          <marker id="lumi-caret" viewBox="0 0 10 10" refX="7.5" refY="5"
+                  markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto">
+            <path d="M 3 1.2 L 7.5 5 L 3 8.8" fill="none" stroke="var(--on-surface)"
+                  stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <marker id="lumi-caret-primary" viewBox="0 0 10 10" refX="7.5" refY="5"
+                  markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto">
+            <path d="M 3 1.2 L 7.5 5 L 3 8.8" fill="none" stroke="var(--primary)"
+                  stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- Dynamic Edge Lines -->
+        <g id="edges-group">
+          <!-- Flow 1: Daily Scraper -> DB -->
+          <path id="edge-scraper-db" class="edge-path" data-from="scraper" data-to="db" data-flow="daily"
+                d="M 125 112 L 125 252" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 2: FE -> BE API -->
+          <path id="edge-fe-be" class="edge-path" data-from="fe" data-to="be" data-flow="sync"
+                d="M 555 112 L 555 142" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 2: BE -> AST Chunking -->
+          <path id="edge-be-ast" class="edge-path" data-from="be" data-to="ast" data-flow="sync"
+                d="M 555 222 L 555 252" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 2: AST -> LangGraph -->
+          <path id="edge-ast-rag" class="edge-path" data-from="ast" data-to="rag" data-flow="sync rag"
+                d="M 470 296 L 433 296" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 3: LangGraph <-> DB Query -->
+          <path id="edge-rag-db" class="edge-path" data-from="rag" data-to="db" data-flow="rag"
+                d="M 255 296 L 218 296" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 3: LangGraph -> Local LLM -->
+          <path id="edge-rag-llm" class="edge-path" data-from="rag" data-to="llm" data-flow="rag sync"
+                d="M 340 332 L 340 362" fill="none" stroke="var(--on-surface)" stroke-width="1.3"
+                stroke-linecap="round" stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+
+          <!-- Flow 3: Local LLM -> FE Report return path -->
+          <path id="edge-llm-fe" class="edge-path" data-from="llm" data-to="fe" data-flow="sync"
+                d="M 425 406 L 638 406 Q 654 406 654 390 L 654 92 Q 654 76 638 76 L 625 76" fill="none"
+                stroke="var(--on-surface)" stroke-width="1.3" stroke-linecap="round"
+                stroke-dasharray="0 4" marker-end="url(#lumi-caret)"/>
+        </g>
+
+        <!-- Enclosed Edge Label Pills -->
+        <g id="pills-group" pointer-events="none">
+          <!-- Scraper -> DB -->
+          <g id="pill-scraper-db" class="edge-pill" data-flow="daily">
+            <rect x="75" y="172" width="100" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="125" y="186" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">Extract &amp; Embed</text>
+          </g>
+
+          <!-- FE -> BE -->
+          <g id="pill-fe-be" class="edge-pill" data-flow="sync">
+            <rect x="507" y="117" width="96" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="555" y="131" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">Code Upload</text>
+          </g>
+
+          <!-- BE -> AST -->
+          <g id="pill-be-ast" class="edge-pill" data-flow="sync">
+            <rect x="515" y="227" width="80" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="555" y="241" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">Parse AST</text>
+          </g>
+
+          <!-- AST -> LangGraph -->
+          <g id="pill-ast-rag" class="edge-pill" data-flow="sync rag">
+            <rect x="424" y="271" width="82" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="465" y="285" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">AST Chunks</text>
+          </g>
+
+          <!-- LangGraph <-> DB -->
+          <g id="pill-rag-db" class="edge-pill" data-flow="rag">
+            <rect x="202" y="271" width="92" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="248" y="285" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">Vector Query</text>
+          </g>
+
+          <!-- LangGraph -> LLM -->
+          <g id="pill-rag-llm" class="edge-pill" data-flow="rag sync">
+            <rect x="282" y="337" width="116" height="20" rx="10" fill="var(--surface-dim)"/>
+            <text x="340" y="351" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">Prompt + Context</text>
+          </g>
+
+          <!-- LLM -> FE -->
+          <g id="pill-llm-fe" class="edge-pill" data-flow="sync">
+            <rect x="607" y="228" width="94" height="20" rx="10" fill="var(--surface-dim)" transform="rotate(90, 654, 238)"/>
+            <text x="654" y="242" fill="var(--on-surface)" font-size="13" font-style="italic" font-family="var(--ff-mono)" text-anchor="middle">JSON Report</text>
+          </g>
+        </g>
+
+        <!-- Nodes Group -->
+        <g id="nodes-group">
+          <!-- Node 1: Daily Scraper (Top Left) -->
+          <g id="node-scraper" class="node-group" data-node="scraper" onclick="selectNode('scraper')">
+            <rect x="40" y="40" width="170" height="72" rx="36" fill="var(--surface-container)" stroke="var(--outline)"/>
+            <text x="125" y="68" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">Daily Scraper</text>
+            <text x="125" y="88" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">Celery / Scrapy</text>
+          </g>
+
+          <!-- Node 2: PostgreSQL + pgvector (Middle Left) -->
+          <g id="node-db" class="node-group" data-node="db" onclick="selectNode('db')">
+            <rect x="40" y="260" width="170" height="72" rx="36" fill="var(--surface-container)" stroke="var(--outline)"/>
+            <text x="125" y="288" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">Vector DB &amp; Store</text>
+            <text x="125" y="308" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">PostgreSQL + pgvector</text>
+          </g>
+
+          <!-- Node 3: React / Monaco FE (Top Right) -->
+          <g id="node-fe" class="node-group" data-node="fe" onclick="selectNode('fe')">
+            <rect x="470" y="40" width="170" height="72" rx="36" fill="var(--surface-bright)" stroke="var(--outline)"/>
+            <text x="555" y="68" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">User Frontend</text>
+            <text x="555" y="88" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">React / Monaco</text>
+          </g>
+
+          <!-- Node 4: FastAPI BE (Middle Upper Right) -->
+          <g id="node-be" class="node-group" data-node="be" onclick="selectNode('be')">
+            <rect x="470" y="150" width="170" height="72" rx="36" fill="var(--surface-container)" stroke="var(--outline)"/>
+            <text x="555" y="178" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">Backend API</text>
+            <text x="555" y="198" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">FastAPI</text>
+          </g>
+
+          <!-- Node 5: Tree-sitter AST Chunker (Middle Right) -->
+          <g id="node-ast" class="node-group" data-node="ast" onclick="selectNode('ast')">
+            <rect x="470" y="260" width="170" height="72" rx="36" fill="var(--surface-container)" stroke="var(--outline)"/>
+            <text x="555" y="288" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">AST Chunking</text>
+            <text x="555" y="308" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">Tree-sitter</text>
+          </g>
+
+          <!-- Node 6: LangGraph Orchestrator (Center - FOCAL HERO) -->
+          <g id="node-rag" class="node-group" data-node="rag" onclick="selectNode('rag')">
+            <rect x="255" y="260" width="170" height="72" rx="36" fill="var(--accent-container)" stroke="var(--primary)"/>
+            <text x="340" y="288" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">RAG Orchestrator</text>
+            <text x="340" y="308" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">LangGraph</text>
+          </g>
+
+          <!-- Node 7: Local LLM (Bottom Center) -->
+          <g id="node-llm" class="node-group" data-node="llm" onclick="selectNode('llm')">
+            <rect x="255" y="370" width="170" height="72" rx="36" fill="var(--surface-container)" stroke="var(--outline)"/>
+            <text x="340" y="398" text-anchor="middle" font-family="var(--ff-sans)" font-size="15" fill="var(--on-surface)">Inference Engine</text>
+            <text x="340" y="418" text-anchor="middle" font-family="var(--ff-mono)" font-size="13" font-style="italic" fill="var(--on-surface)">Local LLM (vLLM)</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Node Detail Inspection Panel -->
+    <div id="detail-panel" class="detail-panel">
+      <div class="detail-header">
+        <span id="detail-title" class="lumi-body-l-emphasized">Select any component to inspect details</span>
+        <div id="detail-tags" class="detail-tags"></div>
+      </div>
+      <p id="detail-desc" class="lumi-body-m detail-description">
+        Click on any node in the diagram above to inspect its architecture specifics, dependencies, and role within the scanner pipeline.
+      </p>
+    </div>
+
+    <!-- Legend Footer -->
+    <div class="legend-strip">
+      <div class="legend-item">
+        <div class="legend-swatch legend-swatch-ingestion"></div>
+        <span>Focal Orchestrator</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch legend-swatch-component"></div>
+        <span>User Interface</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch legend-swatch-storage"></div>
+        <span>Engine / Storage Service</span>
+      </div>
+      <div class="legend-item legend-item-note">
+        <span>Click node to reveal downstream dependencies</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Node Database & Tech Specifications
+    const NODE_DATA = {
+      scraper: {
+        title: "Daily Scraper (Celery / Scrapy)",
+        role: "Asynchronous Data Ingestion",
+        tech: ["Celery", "Scrapy", "Python", "Redis Queue"],
+        desc: "Asynchronously fetches CVE vulnerability databases, NVD feeds, and GitHub security advisories on a daily schedule. Parses raw advisory documents into standardized markdown before vector embedding.",
+        downstream: ["db"]
+      },
+      db: {
+        title: "Vector DB & Store (PostgreSQL + pgvector)",
+        role: "Vector Search & Knowledge Base",
+        tech: ["PostgreSQL 16", "pgvector", "HNSW Index"],
+        desc: "Stores vector embeddings for vulnerability patterns alongside metadata (CVE ID, severity, CWE classification). Enables cosine-similarity vector retrieval with high concurrency.",
+        downstream: []
+      },
+      fe: {
+        title: "User Frontend (React / Monaco)",
+        role: "Client Code Editor & UI",
+        tech: ["React 18", "Monaco Editor", "TypeScript"],
+        desc: "Provides a full syntax-highlighted IDE environment for users to paste or open source code. Displays inline vulnerability diagnostic markers and rich JSON vulnerability reports.",
+        downstream: ["be"]
+      },
+      be: {
+        title: "Backend API Gateway (FastAPI)",
+        role: "API Routing & Session Manager",
+        tech: ["FastAPI", "Uvicorn", "Pydantic v2"],
+        desc: "Handles incoming HTTP code submission requests, validates payloads, enforces rate limits, and streams real-time analysis status updates back to the frontend.",
+        downstream: ["ast"]
+      },
+      ast: {
+        title: "AST Chunking Engine (Tree-sitter)",
+        role: "Syntax-Aware Code Chunking",
+        tech: ["Tree-sitter", "C Bindings", "AST Parser"],
+        desc: "Parses uploaded source code into concrete syntax trees (CST/AST). Extracts semantic code chunks (functions, classes, control blocks) rather than naive line-based splitting.",
+        downstream: ["rag"]
+      },
+      rag: {
+        title: "RAG Orchestrator (LangGraph)",
+        role: "Stateful Graph Control Flow",
+        tech: ["LangGraph", "LangChain Core", "Python"],
+        desc: "Orchestrates multi-step retrieval loops: queries pgvector for matching CVE context based on AST chunk embeddings, evaluates relevance, and constructs structured prompts.",
+        downstream: ["db", "llm"]
+      },
+      llm: {
+        title: "Inference Engine (Local LLM)",
+        role: "Local Code Analysis & Report Gen",
+        tech: ["vLLM", "DeepSeek-Coder-7B", "GGUF/ExLlamaV2"],
+        desc: "Runs local, zero-data-leakage LLM inference over code chunks + retrieved CVE context to generate structured JSON security flaw reports with exact line numbers and fixes.",
+        downstream: ["fe"]
+      }
+    };
+
+    // State
+    const state = {
+      activeFlow: "all",
+      selectedNode: "rag" // Initial complete state on load
+    };
+
+    function selectFlow(flow) {
+      state.activeFlow = flow;
+      state.selectedNode = null; // Clear manual node highlight when changing flow filter
+
+      // Update control chip buttons
+      document.querySelectorAll('.flow-controls .lumi-chip').forEach(btn => {
+        if (btn.dataset.flow === flow) {
+          btn.classList.add('is-active');
+        } else {
+          btn.classList.remove('is-active');
+        }
+      });
+
+      updateViz();
+    }
+
+    function selectNode(nodeKey) {
+      if (state.selectedNode === nodeKey) {
+        state.selectedNode = null; // Toggle off
+      } else {
+        state.selectedNode = nodeKey;
+      }
+      updateViz();
+    }
+
+    function updateViz() {
+      const nodes = document.querySelectorAll('.node-group');
+      const edges = document.querySelectorAll('.edge-path');
+      const pills = document.querySelectorAll('.edge-pill');
+
+      // Determine active highlight sets
+      let activeNodes = new Set();
+      let activeEdges = new Set();
+
+      if (state.selectedNode) {
+        // Node inspection mode: highlight selected node and all downstream dependencies
+        activeNodes.add(state.selectedNode);
+        const getDownstream = (key) => {
+          const info = NODE_DATA[key];
+          if (info && info.downstream) {
+            info.downstream.forEach(target => {
+              activeNodes.add(target);
+              // Find matching edge
+              const edgeId = `edge-${key}-${target}`;
+              activeEdges.add(edgeId);
+              getDownstream(target);
+            });
+          }
+        };
+        getDownstream(state.selectedNode);
+      } else if (state.activeFlow !== "all") {
+        // Flow filter mode
+        edges.forEach(e => {
+          const flows = (e.dataset.flow || "").split(" ");
+          if (flows.includes(state.activeFlow)) {
+            activeEdges.add(e.id);
+            activeNodes.add(e.dataset.from);
+            activeNodes.add(e.dataset.to);
+          }
+        });
+      }
+
+      // Apply node styles
+      nodes.forEach(n => {
+        const key = n.dataset.node;
+        n.classList.remove('is-selected', 'is-dimmed');
+
+        if (state.selectedNode === key) {
+          n.classList.add('is-selected');
+        } else if ((state.selectedNode || state.activeFlow !== "all") && !activeNodes.has(key)) {
+          n.classList.add('is-dimmed');
+        }
+      });
+
+      // Apply edge styles
+      edges.forEach(e => {
+        e.classList.remove('is-highlighted', 'is-dimmed');
+        const isTarget = activeEdges.has(e.id);
+
+        if (isTarget) {
+          e.classList.add('is-highlighted');
+        } else if (state.selectedNode || state.activeFlow !== "all") {
+          e.classList.add('is-dimmed');
+        }
+      });
+
+      // Apply pill styles
+      pills.forEach(p => {
+        p.classList.remove('is-dimmed');
+        const flows = (p.dataset.flow || "").split(" ");
+        if (state.selectedNode) {
+          // Find matching edge
+          const matchingEdge = Array.from(activeEdges).some(edgeId => p.id.includes(edgeId.replace('edge-', '')));
+          if (!matchingEdge) p.classList.add('is-dimmed');
+        } else if (state.activeFlow !== "all" && !flows.includes(state.activeFlow)) {
+          p.classList.add('is-dimmed');
+        }
+      });
+
+      // Update detail panel
+      renderDetailPanel();
+    }
+
+    function renderDetailPanel() {
+      const panelTitle = document.getElementById('detail-title');
+      const panelTags = document.getElementById('detail-tags');
+      const panelDesc = document.getElementById('detail-desc');
+
+      const activeKey = state.selectedNode || (state.activeFlow !== "all" ? null : "rag");
+      const info = NODE_DATA[activeKey];
+
+      if (info) {
+        if (panelTitle) panelTitle.textContent = info.title;
+        if (panelTags) panelTags.innerHTML = info.tech.map((t, i) =>
+          `<span class="tech-tag ${i === 0 ? 'primary' : ''}">${t}</span>`
+        ).join('');
+        if (panelDesc) panelDesc.textContent = info.desc;
+      } else {
+        if (panelTitle) panelTitle.textContent = "Flow View: " + getFlowTitle(state.activeFlow);
+        if (panelTags) panelTags.innerHTML = `<span class="tech-tag primary">${state.activeFlow.toUpperCase()}</span>`;
+        if (panelDesc) panelDesc.textContent = getFlowDescription(state.activeFlow);
+      }
+    }
+
+    function getFlowTitle(flow) {
+      switch (flow) {
+        case "daily": return "Daily Ingestion Loop";
+        case "sync": return "Real-Time Scan Pipeline";
+        case "rag": return "RAG Vector Context Retrieval";
+        default: return "Full Tech Stack Overview";
+      }
+    }
+
+    function getFlowDescription(flow) {
+      switch (flow) {
+        case "daily": return "Asynchronous background workers periodically scrape security feeds and vectorize advisory texts into PostgreSQL pgvector.";
+        case "sync": return "Synchronous user request path: code is parsed into AST chunks, matched with CVE vectors, and scanned by the local LLM.";
+        case "rag": return "Core RAG loop orchestrated by LangGraph: queries vector store for relevant CVEs and formats context for LLM reasoning.";
+        default: return "Click on any component node to inspect technology details and downstream data flow.";
+      }
+    }
+
+    function toggleTheme() {
+      const nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      try {
+        localStorage.setItem('architecture-theme', nextTheme);
+      } catch (e) {}
+    }
+
+    // Initialize first frame
+    updateViz();
+
+    // Theme & Iframe Resize Integration
+    const applyTheme = t => {
+      document.documentElement.setAttribute('data-theme', t);
+      updateViz();
+    };
+    if (!document.documentElement.hasAttribute('data-theme') && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
+      applyTheme('dark');
+    }
+    window.addEventListener('message', e => {
+      if (e.data?.type === 'set-theme' || e.data?.type === 'APPLY_THEME') applyTheme(e.data.theme);
+    });
+
+    (function autoResize() {
+      function notifyHeight() {
+        const c = document.querySelector('.widget-container') || document.body;
+        if (!c) return;
+        const h = Math.ceil(Math.max(c.getBoundingClientRect().bottom, c.scrollHeight));
+        window.parent.postMessage({ type: 'widget-resize', height: h }, '*');
+      }
+      window.addEventListener('load', () => setTimeout(notifyHeight, 120));
+      new ResizeObserver(() => notifyHeight()).observe(document.querySelector('.widget-container') || document.body);
+    })();
+  </script>
+
+<script>/*luminous-slider-normalizer*/(function(){function f(r){if(!r||r.type!=='range')return;var mn=parseFloat(r.min||'0'),mx=parseFloat(r.max||'100'),v=parseFloat(r.value);if(isNaN(v))v=(mn+mx)/2;var p=mx>mn?((v-mn)/(mx-mn))*100:50;r.style.setProperty('--progress',p+'%');r.style.removeProperty('--slider-fill');}function all(){document.querySelectorAll('input[type="range"], .lumi-slider').forEach(f);}document.addEventListener('input',function(e){f(e.target);});if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',all);else all();})();</script>
+</body>
+</html>
